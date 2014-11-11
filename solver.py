@@ -3,7 +3,7 @@
 import math
 import fileinput
 
-board = [];
+global board
 
 #macro control flow of the program, 
 #at least until the nondeterministic function is called
@@ -16,14 +16,16 @@ def main():
 	if isFinished():
 		print_board()
 	else:
-		if nondeterministic_test()
+		if nondeterministic_test():
 			print_board()
-		else 
+		else:
 			print "error: board not solveable"
 
 #reads in the board from a text file
 def read_in():
-	index = 0;
+	global board 
+	board = []
+	index = 0
 	for line in fileinput.input():
 		for char in line:
 			if char != ' ' and char != '\n':
@@ -61,6 +63,7 @@ def blockArr(i):
 #goes through by row, column, or block and eliminates possible values 
 #if the number is found in the rcb
 def rcb_elimination(i, isChanged, rcb_func):
+	global board
 	rcbRange = rcb_func(i);
 	for j in rcbRange:
 		if isinstance(board[j], int):
@@ -75,6 +78,7 @@ def rcb_elimination(i, isChanged, rcb_func):
 #after board is changed
 #sets possibility lists of only one element to certain integers
 def set_values():
+	global board
 	for i in range(81):
 		if isinstance(board[i], list):
 			if len(board[i]) == 1:
@@ -84,15 +88,15 @@ def set_values():
 def isCorrect():
 	correct = True
 	for i in range(9):
-		correct = rcb_check(i, rowArr)
-		correct = rcb_check(i, colArr)
-		correct = rcb_check(i, blockArr)
+		correct = rcb_check(i, correct, rowArr)
+		correct = rcb_check(i, correct, colArr)
+		correct = rcb_check(i, correct, blockArr)
 		if not correct:
 			return False
 	return True
 
 #checks that the row, column, or block does not contain any duplicate numbers
-def rcb_check(i, rcb_func):
+def rcb_check(i, correct, rcb_func):
 	rcbRange = rcb_func(i)
 	for j in rcbRange:
 		if isinstance(board[j], int):
@@ -101,7 +105,9 @@ def rcb_check(i, rcb_func):
 			for k in rcbRange:
 				if k != j and board[k] == board[j]:
 					return False
-	return True
+		elif board[j] == []:
+			return False
+	return correct
 
 #returns true if all elements in the board are determined
 def isFinished():
@@ -110,8 +116,50 @@ def isFinished():
 			return False
 	return True
 
+#selects potential values for the board, from those squares with only possible ones
+#recursively tests these and other values if necessary
 def nondeterministic_test():
-	print "this is a hard puzzle"
+	global board
+	oldBoard = [];
+	oldBoard = deepCopy(oldBoard, board)
+
+	#find first element that is a list
+	for i in range(81):
+		if isinstance(board[i], list):
+			index = i
+			break
+
+	#test that element's possible numbers
+	for i in range(len(oldBoard[index])):
+		board[index] = oldBoard[index][i]
+		eliminate_duplicates()
+
+		if isCorrect():
+			if isFinished():
+				return True
+			else:
+				#continue on to the next list 
+				if nondeterministic_test():
+					return True
+
+		board = deepCopy(board, oldBoard)
+
+	#no solution is possible with this current iteration of the board
+	return False
+
+#makes a deep copy of the original board. In python, lists are not copied but
+#pointed to, this is true of lists within lists as well.
+def deepCopy(copy, orig):
+	copy = [];
+	for i in range(81):
+		if isinstance(orig[i], list):
+			copy.append([])
+			for j in range(len(orig[i])):
+				copy[i].append(orig[i][j])
+		else:
+			copy.append(orig[i])
+	return copy
+
 
 #prints the board with block delimiters
 def print_board():
@@ -125,19 +173,10 @@ def print_board():
 			if index%27 == 26:
 				print "_ _ _ _ _ _ _ _ _ _ _ "
 			index += 1;
+	print "\n"
 
-
+#lets get this party started!
 if __name__ == "__main__":
 	main()
 
 
-
-''' for reference
-	board[1].remove(1);
-	val = 1;
-	if isinstance(val, int):
-		print board, bol; 
-	if 23 in board[0]:
-		board[0].remove(23)
-		len(board[0])
-'''

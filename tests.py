@@ -5,8 +5,14 @@ if isinstance(i, list) and 2 in i:
 
 '''for j in [3,4,65,8]:
 	print len(j);'''
-exit()
-if 8 == [8,9]:
-	print "hm"
-else:
-	print 'nope'
+
+
+def test():
+	global num 
+	num = 3
+	ln = list([num])
+	print ln
+
+global num
+test()
+print num
