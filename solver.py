@@ -164,16 +164,17 @@ def deepCopy(copy, orig):
 #prints the board with block delimiters
 def print_board():
 	index = 0;
+	print ""
 	for i in range(81):
 			print board[i],
 			if index%9 == 2 or index%9 == 5:
 				print "|",
 			elif index%9 == 8:
 				print "\n",
-			if index%27 == 26:
+			if index%27 == 26 and index != 80:
 				print "_ _ _ _ _ _ _ _ _ _ _ "
 			index += 1;
-	print "\n"
+	print ""
 
 #lets get this party started!
 if __name__ == "__main__":
