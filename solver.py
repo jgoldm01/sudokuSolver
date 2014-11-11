@@ -5,6 +5,8 @@ import fileinput
 
 board = [];
 
+#macro control flow of the program, 
+#at least until the nondeterministic function is called
 def main():
 	read_in()
 	eliminate_duplicates()
@@ -12,10 +14,14 @@ def main():
 		print "error: board not solveable"
 		exit()
 	if isFinished():
-		print_board();
+		print_board()
 	else:
-		nondeterministic_test()
+		if nondeterministic_test()
+			print_board()
+		else 
+			print "error: board not solveable"
 
+#reads in the board from a text file
 def read_in():
 	index = 0;
 	for line in fileinput.input():
@@ -27,6 +33,8 @@ def read_in():
 					board.append(int(char));
 				index += 1;
 
+#eliminates duplicates from the sudoku board through simple rcb checks
+#rcb - row, column, block
 def eliminate_duplicates():
 	isChanged = False
 	for i in range(9):
@@ -37,16 +45,21 @@ def eliminate_duplicates():
 		set_values()
 		eliminate_duplicates()
 
+#returns the indicies of the i'th row
 def rowArr(i):
 	return range(i*9, (i*9)+9);
 
+#returns the indicies of the i'th column
 def colArr(i):
 	return range(i,81,9);
 
+#returns the indicies of the i'th block
 def blockArr(i):
 	s = (i/3)*27 + (i%3)*3;
 	return [s, s+1, s+2, s+9, s+10, s+11, s+18, s+19, s+20];
 
+#goes through by row, column, or block and eliminates possible values 
+#if the number is found in the rcb
 def rcb_elimination(i, isChanged, rcb_func):
 	rcbRange = rcb_func(i);
 	for j in rcbRange:
@@ -59,6 +72,8 @@ def rcb_elimination(i, isChanged, rcb_func):
 					board[k].remove(board[j]);
 	return isChanged
 
+#after board is changed
+#sets possibility lists of only one element to certain integers
 def set_values():
 	for i in range(81):
 		if isinstance(board[i], list):
@@ -76,6 +91,7 @@ def isCorrect():
 			return False
 	return True
 
+#checks that the row, column, or block does not contain any duplicate numbers
 def rcb_check(i, rcb_func):
 	rcbRange = rcb_func(i)
 	for j in rcbRange:
@@ -87,6 +103,7 @@ def rcb_check(i, rcb_func):
 					return False
 	return True
 
+#returns true if all elements in the board are determined
 def isFinished():
 	for i in range(81):
 		if isinstance(board[i], list):
@@ -96,6 +113,7 @@ def isFinished():
 def nondeterministic_test():
 	print "this is a hard puzzle"
 
+#prints the board with block delimiters
 def print_board():
 	index = 0;
 	for i in range(81):
@@ -107,6 +125,7 @@ def print_board():
 			if index%27 == 26:
 				print "_ _ _ _ _ _ _ _ _ _ _ "
 			index += 1;
+
 
 if __name__ == "__main__":
 	main()
