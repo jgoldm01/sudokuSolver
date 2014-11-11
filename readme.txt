@@ -11,8 +11,8 @@ _ _ 2 _ _ 7 5 8 _  <- blanks signify unknown spaces, 0 does as well
 _ _ 9 _ _ _ _ _ _ 
 4 _ 3 5 _ _ 8 _ _ 
 _ 7 1 6 _ 3 2 9 _  
-2 _ 4 | _ 9 6 | 1 5 _ <- the user can choose to separate blocks with | 
-5 _ _ | 2 _ 1 | _ 3 _ 	 for organization
+2 _ 4 | _ 9 6 | 1 5 _  <- the user may separate blocks with the "|" character
+5 _ _ | 2 _ 1 | _ 3 _ 	 
 _ _ _ | _ _ 4 | _ _ _ 
 
 the solution will be pushed to standard ouptput. 

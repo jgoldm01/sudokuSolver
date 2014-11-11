@@ -65,7 +65,7 @@ def blockArr(i):
 def rcb_elimination(i, isChanged, rcb_func):
 	global board
 	rcbRange = rcb_func(i);
-	for j in rcbRange:
+	for j in rcbRange: 
 		if isinstance(board[j], int):
 			#iterates through row, 
 			#eliminating the found number from possibility lists
