@@ -8,7 +8,10 @@ board = [];
 def main():
 	read_in()
 	eliminate_duplicates()
-	if (isfinished()):
+	if not isCorrect():
+		print "error: board not solveable"
+		exit()
+	if isFinished():
 		print_board();
 	else:
 		nondeterministic_test()
@@ -62,7 +65,29 @@ def set_values():
 			if len(board[i]) == 1:
 				board[i] = board[i][0]
 
-def isfinished():
+#returns whether the board adheres to the rules of sudoku
+def isCorrect():
+	correct = True
+	for i in range(9):
+		correct = rcb_check(i, rowArr)
+		correct = rcb_check(i, colArr)
+		correct = rcb_check(i, blockArr)
+		if not correct:
+			return False
+	return True
+
+def rcb_check(i, rcb_func):
+	rcbRange = rcb_func(i)
+	for j in rcbRange:
+		if isinstance(board[j], int):
+			#iterates through row, 
+			#eliminating the found number from possibility lists
+			for k in rcbRange:
+				if k != j and board[k] == board[j]:
+					return False
+	return True
+
+def isFinished():
 	for i in range(81):
 		if isinstance(board[i], list):
 			return False

@@ -5,12 +5,8 @@ if isinstance(i, list) and 2 in i:
 
 '''for j in [3,4,65,8]:
 	print len(j);'''
-
-it = iter(range(6))
-for x, y, z in zip(it, it, it):
-	print x, y, z, "|"
-
-for f in range(6):
-	print f,
-
-print "\n_ _ _ _ _ _ "
+exit()
+if 8 == [8,9]:
+	print "hm"
+else:
+	print 'nope'
