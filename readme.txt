@@ -1,6 +1,6 @@
-This program finds a solution to a sudoku puzzle of any difficulty. 
+solver.py finds a solution to a sudoku puzzle of any difficulty. 
 
-It reads in a text file specified on the command line. 
+The program reads in a text file specified on the command line. 
 call with: python solver.py board.txt
 
 An example body of board.txt would be:
