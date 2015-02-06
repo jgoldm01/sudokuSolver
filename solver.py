@@ -176,8 +176,6 @@ def print_board():
 			index += 1;
 	print ""
 
-#lets get this party started!
-if __name__ == "__main__":
-	main()
+
 
 

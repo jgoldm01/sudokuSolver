@@ -9,6 +9,7 @@ except ImportError:
     # for Python3
     from tkinter import * 
     
+# class containing the Tkinter widget
 class App:
 	def __init__(self, master):
 		master.geometry("%dx%d+300+300" % (275, 340))
@@ -18,6 +19,7 @@ class App:
 		frame = Frame(master, bg='blue')
 		frame.grid()
 
+		# build the board aspect of the Gui
 		self.board = [[Entry(frame, width=2, selectborderwidth=5) for x in range(9)] for x in range(9)];
 		for x in range(9):
 			for y in range(9):
@@ -27,14 +29,16 @@ class App:
 		Label(frame, text="   ", bg="blue").grid(row=4, column=4);
 		Label(frame, text="   ", bg="blue").grid(row=8, column=8);
 
-		self.hi_there = Button(master, text="SOLVE!", command=self.get_board)
-		self.hi_there.grid(pady=10)
+		# menu buttons, solve and quit
+		self.solveButton = Button(master, text="SOLVE!", command=self.read_board)
+		self.solveButton.grid(pady=10)
 
-		self.button = Button(master, text="QUIT", fg="red", command=frame.quit)
-		self.button.grid()
+		self.quitButton = Button(master, text="QUIT", fg="red", command=frame.quit)
+		self.quitButton.grid()
 
-
-	def get_board(self):
+	# reads the board on the gui, 
+	# makes a 2d array and passes it to the solver
+	def read_board(self):
 		global board 
 
 		board = [];
@@ -63,6 +67,7 @@ class App:
 	def inputErrorMessage(self, x, y):
 		return "please input a number between 1-9 in row %d, column %d" % (x+1, y+1)
 
+	# displays notification window with the error message
 	def displayError(self, message):
 		top=Toplevel()
 		top.title("numbers")
@@ -71,6 +76,7 @@ class App:
 		msg.pack()
 		top.geometry("%dx%d+325+400" % (200, 100))
 
+	# updates the grid on the gui accoinding to the board passed from the solver
 	def displaySolution(self, board):
 		for x in range(9):
 			for y in range(9):
@@ -85,5 +91,5 @@ def main():
 	root.mainloop()
 
 
-if __name__ == '__main__':
-	main()
+# if __name__ == '__main__':
+# 	main()
