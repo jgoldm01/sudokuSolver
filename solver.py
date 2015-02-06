@@ -7,19 +7,19 @@ global board
 
 #macro control flow of the program, 
 #at least until the nondeterministic function is called
-def main():
-	read_in()
+def solve(guiBoard):
+	global board
+	board = guiBoard
 	eliminate_duplicates()
 	if not isCorrect():
-		print "error: board not solveable"
-		exit()
+		return "error: board not solveable"
 	if isFinished():
-		print_board()
+		return board
 	else:
 		if nondeterministic_test():
-			print_board()
+			return board
 		else:
-			print "error: board not solveable"
+			return "error: board not solveable"
 
 #reads in the board from a text file
 def read_in():
