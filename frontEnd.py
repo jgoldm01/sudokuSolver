@@ -58,14 +58,16 @@ class App:
 				else:
 					board.append(num);
 
-		retVal = solver.solve(board);
+		retVal = solver.solve(board)
 		if isinstance(retVal, str):
 			self.displayError(retVal)
 		else:
 			self.displaySolution(retVal)
 
 	def inputErrorMessage(self, x, y):
-		return "please input a number between 1-9 in row %d, column %d" % (x+1, y+1)
+		return "please input a number between 1-9 for known values, \n"  \
+					 "or input 0 for unknown values,\n" \
+					 "in row %d, column %d" % (x+1, y+1)
 
 	# displays notification window with the error message
 	def displayError(self, message):
@@ -74,7 +76,7 @@ class App:
 
 		msg = Message(top, text=message)
 		msg.pack()
-		top.geometry("%dx%d+325+400" % (200, 100))
+		top.geometry("%dx%d+325+400" % (200, 120))
 
 	# updates the grid on the gui accoinding to the board passed from the solver
 	def displaySolution(self, board):
