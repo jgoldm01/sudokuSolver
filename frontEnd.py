@@ -8,9 +8,7 @@ try:
 except ImportError:
     # for Python3
     from tkinter import * 
-
-board = "hii"
-
+    
 class App:
 	def __init__(self, master):
 		master.geometry("%dx%d+300+300" % (275, 340))
